@@ -11,7 +11,7 @@
 */
 
 // >>> Hier Ihre E-Mail-Adresse eintragen, an die Anfragen gehen sollen:
-const CONTACT_EMAIL = 'melanie.oraca@oracadigital.de';
+const CONTACT_EMAIL = 'info@oracadigital.de';
 
 // >>> Hier Ihre WhatsApp-Nummer eintragen (mit Ländervorwahl, ohne + und Leerzeichen, z. B. '4917612345678').
 //     Solange das Feld leer ist, wird kein WhatsApp-Button angezeigt.
