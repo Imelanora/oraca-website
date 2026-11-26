@@ -665,3 +665,22 @@ body:has(.wa-btn) .site-footer { padding-bottom: 110px; }
 /* Kennzahlen: nichts darf in die Nachbarspalte ragen */
 .fact { min-width: 0; }
 .fact b { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 4px; }
+
+/* ---------- Logo: Bit springt beim Darüberfahren und Klicken ---------- */
+.brand .bit-o .bit { transform-box: fill-box; transform-origin: 50% 100%; }
+.brand:hover .bit-o .bit, .brand.jump .bit-o .bit { animation: bitJump .75s cubic-bezier(.3, .9, .4, 1); }
+@keyframes bitJump {
+  0%   { transform: translateY(0) scale(1, 1); }
+  12%  { transform: translateY(0) scale(1.15, .8); }
+  38%  { transform: translateY(-46px) scale(.92, 1.1) rotate(-10deg); }
+  62%  { transform: translateY(0) scale(1.12, .85); }
+  76%  { transform: translateY(-9px) scale(1, 1); }
+  90%  { transform: translateY(0) scale(1.04, .96); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@media (prefers-reduced-motion: reduce) { .brand:hover .bit-o .bit, .brand.jump .bit-o .bit { animation: none; } }
+
+/* ---------- Kontakt: Ansprechpartnerin ---------- */
+.about-text h2 { font-size: clamp(36px, 4.8vw, 64px); letter-spacing: -0.045em; color: #fff; }
+.about-text h2 .accent { color: var(--lav); }
+.about-text .btn { align-self: flex-start; margin-top: 6px; }

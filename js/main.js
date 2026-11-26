@@ -385,3 +385,18 @@ document.querySelectorAll('.year').forEach((el) => { el.textContent = new Date()
     new IntersectionObserver((e) => { sumVisible = e[0].isIntersecting; sync(); }).observe(summary);
   }
 })();
+
+/* ---------------- 11. Logo: Bit springt beim Klicken ---------------- */
+(function () {
+  document.querySelectorAll('.brand').forEach((b) => {
+    b.addEventListener('animationend', () => b.classList.remove('jump'));
+    b.addEventListener('click', (e) => {
+      if (reduceMotion || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      b.classList.remove('jump');
+      void b.offsetWidth; // Animation neu starten
+      b.classList.add('jump');
+      setTimeout(() => { location.href = b.href; }, 480);
+    });
+  });
+})();
