@@ -287,8 +287,14 @@ const rand01 = () => (Math.random() > 0.5 ? '1' : '0');
       return;
     }
     const d = new FormData(form);
+    if (d.get('antwort') !== 'E-Mail' && !String(d.get('telefon') || '').trim()) {
+      status.classList.add('error');
+      status.textContent = `Für eine Antwort per ${d.get('antwort')} brauche ich bitte Ihre Telefonnummer.`;
+      form.querySelector('input[name="telefon"]').focus();
+      return;
+    }
     const subject = `Anfrage: ${d.get('interesse')} – ${d.get('name')}`;
-    const body = `Name: ${d.get('name')}\nE-Mail: ${d.get('email')}\nThema: ${d.get('interesse')}\n\n${d.get('nachricht')}`;
+    const body = `Name: ${d.get('name')}\nE-Mail: ${d.get('email')}\nTelefon: ${d.get('telefon') || '–'}\nAntwort per: ${d.get('antwort')}\nThema: ${d.get('interesse')}\n\n${d.get('nachricht')}`;
 
     // Solange noch kein Formular-Schlüssel eingetragen ist: wie bisher über das E-Mail-Programm
     if (!FORM_ACCESS_KEY) {
@@ -310,6 +316,8 @@ const rand01 = () => (Math.random() > 0.5 ? '1' : '0');
         from_name: 'ORACA Webseite',
         name: d.get('name'),
         email: d.get('email'),
+        telefon: d.get('telefon') || '–',
+        antwort_per: d.get('antwort'),
         replyto: d.get('email'),
         thema: d.get('interesse'),
         nachricht: d.get('nachricht'),

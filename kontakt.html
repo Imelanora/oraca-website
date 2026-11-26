@@ -21,8 +21,8 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="img/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="css/fonts.css?v=24">
-  <link rel="stylesheet" href="css/style.css?v=24">
+  <link rel="stylesheet" href="css/fonts.css?v=25">
+  <link rel="stylesheet" href="css/style.css?v=25">
 </head>
 <body>
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -65,6 +65,12 @@
             <div class="row2">
               <label><span class="f-label">Name</span><input type="text" name="name" autocomplete="name" required></label>
               <label><span class="f-label">E-Mail</span><input type="email" name="email" autocomplete="email" required></label>
+            </div>
+            <div class="row2">
+              <label><span class="f-label">Telefon <em>(optional)</em></span><input type="tel" name="telefon" autocomplete="tel" inputmode="tel" placeholder="für Rückruf oder WhatsApp"></label>
+              <label><span class="f-label">Antwort am liebsten per</span>
+                <select name="antwort"><option>E-Mail</option><option>Telefon</option><option>WhatsApp</option></select>
+              </label>
             </div>
             <label><span class="f-label">Thema</span>
               <select name="interesse"><option>Webseite</option><option>Kassen-Service</option><option>Grafikdesign</option><option>Mehreres</option></select>
@@ -124,6 +130,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=24"></script>
+  <script src="js/main.js?v=25"></script>
 </body>
 </html>
