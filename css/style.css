@@ -684,3 +684,10 @@ body:has(.wa-btn) .site-footer { padding-bottom: 110px; }
 .about-text h2 { font-size: clamp(36px, 4.8vw, 64px); letter-spacing: -0.045em; color: #fff; }
 .about-text h2 .accent { color: var(--lav); }
 .about-text .btn { align-self: flex-start; margin-top: 6px; }
+
+/* Kontakt: Foto der Ansprechpartnerin */
+.contact-person { display: flex; align-items: center; gap: 22px; margin-top: 8px; }
+.contact-person .photo-logo { width: 150px; margin: 0; flex-shrink: 0; }
+.contact-person b { display: block; font-size: 20px; color: #fff; letter-spacing: -0.01em; }
+.contact-person span { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--lav); }
+@media (max-width: 760px) { .contact-person .photo-logo { width: 120px; } }
