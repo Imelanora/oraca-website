@@ -691,3 +691,5 @@ body:has(.wa-btn) .site-footer { padding-bottom: 110px; }
 .contact-person b { display: block; font-size: 20px; color: #fff; letter-spacing: -0.01em; }
 .contact-person span { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--lav); }
 @media (max-width: 760px) { .contact-person .photo-logo { width: 120px; } }
+.contact-form .hp { display: none; }
+.contact-form button[disabled] { opacity: .6; cursor: wait; }

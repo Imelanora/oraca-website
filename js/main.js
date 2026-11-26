@@ -13,6 +13,10 @@
 // >>> Hier Ihre E-Mail-Adresse eintragen, an die Anfragen gehen sollen:
 const CONTACT_EMAIL = 'info@oracadigital.de';
 
+// >>> Schlüssel von web3forms.com – damit wird das Kontaktformular direkt verschickt.
+//     Solange das Feld leer ist, öffnet sich wie bisher das E-Mail-Programm.
+const FORM_ACCESS_KEY = 'a805c4c8-55c0-4cca-9e8d-64985e935a0e';
+
 // >>> Hier Ihre WhatsApp-Nummer eintragen (mit Ländervorwahl, ohne + und Leerzeichen, z. B. '4917612345678').
 //     Solange das Feld leer ist, wird kein WhatsApp-Button angezeigt.
 const WHATSAPP_NUMBER = '491738506232';
@@ -282,16 +286,47 @@ const rand01 = () => (Math.random() > 0.5 ? '1' : '0');
       if (first) first.focus();
       return;
     }
-    if (!CONTACT_EMAIL) {
-      status.classList.add('error');
-      status.textContent = 'Das Formular ist noch nicht mit einer E-Mail-Adresse verbunden.';
-      return;
-    }
     const d = new FormData(form);
     const subject = `Anfrage: ${d.get('interesse')} – ${d.get('name')}`;
     const body = `Name: ${d.get('name')}\nE-Mail: ${d.get('email')}\nThema: ${d.get('interesse')}\n\n${d.get('nachricht')}`;
-    location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.textContent = 'Ihr E-Mail-Programm öffnet sich – bitte dort absenden. Danke!';
+
+    // Solange noch kein Formular-Schlüssel eingetragen ist: wie bisher über das E-Mail-Programm
+    if (!FORM_ACCESS_KEY) {
+      location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      status.textContent = 'Ihr E-Mail-Programm öffnet sich – bitte dort absenden. Danke!';
+      return;
+    }
+
+    // Direkt versenden – ohne E-Mail-Programm
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    status.textContent = 'Wird gesendet …';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: FORM_ACCESS_KEY,
+        subject,
+        from_name: 'ORACA Webseite',
+        name: d.get('name'),
+        email: d.get('email'),
+        replyto: d.get('email'),
+        thema: d.get('interesse'),
+        nachricht: d.get('nachricht'),
+        botcheck: d.get('botcheck') || '',
+      }),
+    })
+      .then((r) => r.json().then((j) => ({ ok: r.ok && j.success })))
+      .then(({ ok }) => {
+        if (!ok) throw new Error('send failed');
+        form.reset();
+        status.textContent = '✓ Vielen Dank! Ihre Anfrage ist angekommen – ich melde mich schnellstmöglich bei Ihnen.';
+      })
+      .catch(() => {
+        status.classList.add('error');
+        status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie mir direkt an ${CONTACT_EMAIL} oder per WhatsApp.`;
+      })
+      .finally(() => { btn.disabled = false; });
   });
 })();
 
