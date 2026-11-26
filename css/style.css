@@ -695,3 +695,8 @@ body:has(.wa-btn) .site-footer { padding-bottom: 110px; }
 .contact-form button[disabled] { opacity: .6; cursor: wait; }
 .f-label em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: .75; }
 .contact-form input::placeholder { color: #A3A5BF; }
+
+/* Regionen: auf dem Handy leuchtet beim Scrollen die Zeile in der Bildschirmmitte auf (wie Hover am Laptop) */
+.cities li.on { color: var(--dusk); padding-left: 10px; }
+.cities li span { transition: color .3s ease; }
+.cities li.on span, .cities li:hover span { color: var(--mint-d); }

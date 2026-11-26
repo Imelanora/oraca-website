@@ -443,3 +443,30 @@ document.querySelectorAll('.year').forEach((el) => { el.textContent = new Date()
     });
   });
 })();
+
+/* ---------------- 12. Regionen: Hervorhebung beim Scrollen (Touch-Geräte) ---------------- */
+(function () {
+  const list = document.querySelector('.cities');
+  if (!list) return;
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) return; // am Laptop reicht der Hover-Effekt
+  const items = [...list.querySelectorAll('li')];
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const lr = list.getBoundingClientRect();
+    const mid = innerHeight / 2;
+    let best = null, bestDist = Infinity;
+    if (lr.bottom > 0 && lr.top < innerHeight) {
+      items.forEach((li) => {
+        const r = li.getBoundingClientRect();
+        const dist = Math.abs(r.top + r.height / 2 - mid);
+        if (dist < bestDist) { bestDist = dist; best = li; }
+      });
+    }
+    // nur hervorheben, wenn die Zeile wirklich nahe der Mitte ist
+    items.forEach((li) => li.classList.toggle('on', li === best && bestDist < innerHeight * 0.3));
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
